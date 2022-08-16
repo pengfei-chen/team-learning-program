@@ -1,27 +1,42 @@
-# Task5 爬虫入门与综合应用
+# Task 05爬虫入门与综合应用
+
+- [Task 05爬虫入门与综合应用](#task-05爬虫入门与综合应用)
+  - [5.0 前言](#50-前言)
+  - [5.1 Requests简介](#51-requests简介)
+    - [5.1.1 访问百度](#511-访问百度)
+    - [5.1.2 下载txt文件](#512-下载txt文件)
+    - [5.1.3 下载图片](#513-下载图片)
+  - [5.2 HTML解析和提取](#52-html解析和提取)
+  - [5.3 BeautifulSoup简介](#53-beautifulsoup简介)
+  - [5.4 实践项目1：自如公寓数据抓取](#54-实践项目1自如公寓数据抓取)
+  - [5.5 实践项目2：36kr信息抓取与邮件发送](#55-实践项目236kr信息抓取与邮件发送)
+
+## 5.0 前言
 
 对于自动化办公而言，网络数据的批量获取完数据可以节约相当的时间，因此爬虫在自动化办公中占据了一个比较重要的位置。
 
 因而本节针对爬虫项目进行一个介绍，力求最大程度还原实际的办公场景。
 
-## **1.Requests简介**
+## 5.1 Requests简介
 
 Requests是一款目前非常流行的http请求库，使用python编写，能非常方便的对网页Requests进行爬取，也是爬虫最常用的发起请求第三方库。
 
 安装方法：
 
-```
+``` python
 pip install requests
 或者conda安装
 conda install requests
 ```
 
-```
+``` python
 re.status_code 响应的HTTP状态码
 re.text 响应内容的字符串形式
 rs.content 响应内容的二进制形式
 rs.encoding 响应内容的编码
 ```
+
+### 5.1.1 访问百度
 
 试一试对百度首页进行数据请求：
 
@@ -39,6 +54,8 @@ print(re.status_code)
 ```
 
 **res.text** 返回的是服务器响应内容的字符串形式，也就是文本内容
+
+### 5.1.2 下载txt文件
 
 例：用爬虫下载孔乙己的文章，网址是https://apiv3.shanbay.com/codetime/articles/mnvdu
 
@@ -62,6 +79,8 @@ with open('鲁迅文章.txt', 'w') as file:
 
 re.txt就是网页中的内容，将内容保存到txt文件中
 
+### 5.1.3 下载图片
+
 **re.text用于文本内容的获取、下载
 re.content用于图片、视频、音频等内容的获取、下载**
 
@@ -75,12 +94,13 @@ res=requests.get('https://img-blog.csdnimg.cn/20210424184053989.PNG')
 # 以二进制写入的方式打开一个名为 info.jpg 的文件
 with open('datawhale.png','wb') as ff:
     # 将数据的二进制形式写入文件中
+    print('爬取图片')
     ff.write(res.content)
 ```
 
 **re.encoding** 爬取内容的编码形似，常见的编码方式有 ASCII、GBK、UTF-8 等。如果用和文件编码不同的方式去解码，我们就会得到一些乱码。
 
-## 2.HTML解析和提取
+## 5.2 HTML解析和提取
 
 **浏览器工作原理：**
 
@@ -115,17 +135,17 @@ print(res.text)
 
 想对html有根据深入的了解，可以html菜鸟教程
 
-https://www.runoob.com/html/html-tutorial.html
+<https://www.runoob.com/html/html-tutorial.html>
 
 那么我们如何解析html页面呢？
 
-## 3.BeautifulSoup简介
+## 5.3 BeautifulSoup简介
 
 我们一般会使用BeautifulSoup这个第三方库
 
 安装方法：
 
-```
+``` python
 pip install bs4
 或
 conda install bs4
@@ -133,7 +153,7 @@ conda install bs4
 
 我们来解析豆瓣读书 Top250 
 
-它的网址是：https://book.douban.com/top250
+它的网址是：<https://book.douban.com/top250>
 
 项目难度：⭐⭐
 
@@ -170,7 +190,7 @@ BeautifulSoup 为我们提供了一些方法
 **find()方法**和**find_all()方法**：
 
 - **find()** 返回符合条件的**首个**数据
-- **find_all()** 返回符合条件的所有**数据
+- **find_all()** 返回符合条件的**所有**数据
 
 ```python
 import io
@@ -205,7 +225,7 @@ HTML定位方法：https://www.cnblogs.com/bosslv/p/8992410.html
 
 理论看百遍，不如上手一练
 
-## 4.实践项目1：自如公寓数据抓取
+## 5.4 实践项目1：自如公寓数据抓取
 
 > 首先是先说一声抱歉，在课程设计时，没有想到自如公寓在价格上增加一定程度的反爬措施，因此自如公寓的价格在本节不讨论，在以后的课程中，我们会详细讲解相关的方法。
 >
@@ -239,7 +259,7 @@ HTML定位方法：https://www.cnblogs.com/bosslv/p/8992410.html
 
 因此你有了思路，通过访问自如公寓的网站，获取每个房间后面的数字号 然后通过数字号访问房屋的直接信息，然后抓取房屋的信息保存在excel中
 
-于是你访问了房屋的网页：https://wh.ziroom.com/x/741955798.html
+于是你访问了房屋的网页：<https://wh.ziroom.com/x/741955798.html>
 
 通过观察房屋的网页，你发现是这些信息是你需要的
 
@@ -475,11 +495,13 @@ if __name__ == '__main__':
 
 运行完成后，会在文件夹中看到刚才爬取好的信息保存在wuhan_ziru.csv中
 
-## 5.实践项目2：36kr信息抓取与邮件发送
+## 5.5 实践项目2：36kr信息抓取与邮件发送
 
 > 本节内容为作者原创的项目，课程难度为5星，建议读者跟着课程一步一步的来，如果有不明白的地方，可以在群里面与其他伙伴进行交流。
 >
 > 在输出本节内容时，请注明来源，Datawhale自动化办公课程，谢谢~
+>
+> 如果没有多个邮箱，可以百度搜索临时邮箱进行实践学习
 
 项目难度：⭐⭐⭐⭐⭐
 
@@ -493,19 +515,19 @@ python爬虫-->通过邮件A发送-->服务器--->通过邮件B接收
 
 因此我们本节的内容就是爬取36kr的信息然后通过邮件发送
 
-36kr官网：https://36kr.com/newsflashes
+36kr官网：<https://36kr.com/newsflashes>
 
 通过python发送邮件需要获得pop3的授权码
 
 具体获取方式可参考：
 
-https://blog.csdn.net/wateryouyo/article/details/51766345
+<https://blog.csdn.net/wateryouyo/article/details/51766345>
 
 接下来就爬取36Kr的网站
 
 通过观察我们发现 消息的标签为
 
-```
+```javascript
 <a class="item-title" rel="noopener noreferrer" target="_blank" href="/newsflashes/1218249313424001" sensors_operation_list="page_flow">中国平安：推动新方正集团聚集医疗健康等核心业务发展</a>
 ```
 
